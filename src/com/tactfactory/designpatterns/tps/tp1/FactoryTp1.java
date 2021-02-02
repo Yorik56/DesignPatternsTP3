@@ -2,11 +2,8 @@ package com.tactfactory.designpatterns.tps.tp1;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import com.tactfactory.designpatterns.tps.tp1.utils.ClassUtils;
 
 /**
 *
@@ -31,44 +28,19 @@ import com.tactfactory.designpatterns.tps.tp1.utils.ClassUtils;
 public class FactoryTp1 {
 
   public static void main(String[] args) throws ClassNotFoundException, IOException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-	  List<Building> buildings = new ArrayList<>();
-
-	  for (Class<?> klazz :  ClassUtils.getClasses("com.tactfactory.designpatterns.tps.tp1")) {
-		  if(klazz.getInterfaces().length > 0 && klazz.getInterfaces()[0].getName().equals(Building.class.getName())) {
-			  buildings.add((Building) klazz.getConstructor().newInstance());
-		  }		  
-	  }	  
-	  
-	  randomTown(buildings);
-	  System.out.println("---------------------------");
-	  manualTown(buildings, "House");
-	  System.out.println("---------------------------");
-	  allTown(buildings);
-  }
-
-  private static void manualTown(List<Building> buildings, String simpleName) {
-	  System.out.println("manual: ");
-	  for(Building building : buildings) {
-		  if(building.getClass().getSimpleName().equals(simpleName)) {
-			 System.out.println(building.getClass().getSimpleName());
-		  }
+	  List<Building> list1 = ConcreteCreator.createProduct("randoms");
+	  for(Building building : list1) {
+		  building.doSmt();
 	  }
-  }
-
-  private static void randomTown(List<Building> buildings) throws ClassNotFoundException, IOException {
-	  System.out.println("randoms: ");
-	  for (int i = 0; i < 20; i++) {
-		  Random randInt= new Random();
-		  int numb = randInt.nextInt(buildings.size());
-		  System.out.println((i+1) + " : " + buildings.get(numb).getClass().getSimpleName());
-	  }  
-  }
-  
-  private static void allTown(List<Building> buildings) {
-	  System.out.println("all: ");
-	  for(Building building : buildings) {
-		 System.out.println(building.getClass().getSimpleName());
+	  List<Building> list2 = ConcreteCreator.createProduct("allTown");
+	  for(Building building : list2) {
+		  building.doSmt();
 	  }
+	  List<Building> list3 = ConcreteCreator.createProduct("House");
+	  for(Building building : list3) {
+		  building.doSmt();
+	  }
+
   }
 
 }
